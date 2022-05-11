@@ -49,5 +49,21 @@ namespace Database_demo
                 }
             }
         }
+        public static void Print1()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var courses = db.Challenges.Include(c => c.Members).ToList();
+                // выводим все курсы
+                foreach (var c in courses)
+                {
+                    Console.WriteLine($"Course: {c.Title}");
+                    // выводим всех студентов для данного кура
+                    foreach (var s in c.Enrollments)
+                        Console.WriteLine($"Name: {s.User?.Name}  Mark: {s.isCompleted}");
+                    Console.WriteLine("-------------------");
+                }
+            }
+        }
     }
 }
